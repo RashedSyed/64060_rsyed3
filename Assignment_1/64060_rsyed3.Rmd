@@ -1,0 +1,49 @@
+---
+title: "FML Assignment"
+author: Rashed Syed
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  word_document: default
+  pdf_document: default
+
+---
+
+
+This is the submission for Assignment 1.
+```{r}
+
+#Tasks 1 and 2, download dataset and import into R. I'm using the Cereals.csv dataset located in our course CSV Files.
+DF=read.csv("./Cereals.csv") 
+library(dplyr) # Install the dplyr library
+```
+
+```{r}
+#Task 3, print out descriptive statistics
+summary(DF)
+
+```
+
+```{r}
+#Task 4 - data transformation, I'm going to summarize the number of different mfr in the dataset
+
+task4_mfrs <- DF %>% group_by(mfr) %>% summarise(manufacturerers_count=n())
+
+print(task4_mfrs)
+```
+
+
+```{r}
+#Task 5 - Plot one qunatittative variable, and one scatterplot
+
+hist(DF$calories,
+     main="Calories",
+     xlab="# of calories",
+     col="orange",
+     freq=TRUE)
+
+plot(DF$calories, DF$sugars)
+
+
+```

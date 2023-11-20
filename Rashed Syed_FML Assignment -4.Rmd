@@ -1,0 +1,89 @@
+---
+title: "FML - Assignment-4"
+author: "Rashed Syed"
+date: "2023-11-20"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+ library(tidyverse)  # For Data manipulation
+library(factoextra)  # Used for clustering algorithms and visualization
+library(dplyr)
+library(ggplot2)
+library(cluster)
+```
+
+```{r}
+Pharmaceuticals <- read.csv("C:/Users/kunal/OneDrive/Desktop/Rashed/Pharmaceuticals.csv")
+
+
+```
+
+
+```{r}
+# Task 1: Use only the numerical variables (1 to 9) to cluster the 21 firms.
+# Prior to clustering data, remove the missing data and rescale variables for comparability.
+
+Pharma_data <- na.omit(Pharmaceuticals)
+Pharma_data
+
+```
+  
+```{r}
+# Taking the quantitative variables(1-9) to cluster the 21 firms
+row.names(Pharma_data) <- Pharma_data[, 1]
+Pharma_data1 <- Pharma_data[, 3:11]  # Considering only numerical values (columns 3-11)
+```
+
+```{r}
+# Normalizing the data frame with scale method
+Pharma_data2 <- scale(Pharma_data1)
+```
+
+```{r}
+# Determine the number of clusters using Elbow Method
+fviz_nbclust(Pharma_data2, kmeans, method = "wss")
+```
+
+```{r}
+# Determine the number of clusters using Silhouette method
+fviz_nbclust(Pharma_data2, kmeans, method = "silhouette")
+```
+```{r}
+# Applying K-means with k=5
+set.seed(64060)
+k_5 <- kmeans(Pharma_data2, centers = 5, nstart = 25)
+```
+
+```{r}
+# Visualizing the clusters
+fviz_cluster(k_5, data = Pharma_data2)
+
+```
+
+```{r}
+# Task 2: Interpret the clusters with respect to the numerical variables used in forming the clusters.
+# By noticing the mean values of all quantitative variables for each cluster
+
+# ... (Cluster interpretation comments)
+
+# Task 3: Is there a pattern in the clusters with respect to the numerical variables (10 to 12)?
+# (those not used in forming the clusters)
+
+# Note: It seems there is no analysis related to variables 10 to 12 in the provided code.
+
+# Task 4: Provide an appropriate name for each cluster using any or all of the variables in the dataset.
+# ... (Cluster naming comments)
+
+# Viewing the cluster plot
+clusplot(Pharma_data2, k_5$cluster, color = TRUE, shade = TRUE, labels = 2, lines = 0)
+```
+
+
+
